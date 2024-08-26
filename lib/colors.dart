@@ -44,3 +44,25 @@ const MaterialColor secondaryAccent = MaterialColor(_secondaryAccentValue, <int,
   700: Color(0xFF48E2FF),
 });
 const int _secondaryAccentValue = 0xFF96EDFE;
+
+const MaterialColor dark = MaterialColor(_darkPrimaryValue, <int, Color>{
+  50: Color(0xFFE0E5E5),
+  100: Color(0xFFB3BDBF),
+  200: Color(0xFF809294),
+  300: Color(0xFF4D6669),
+  400: Color(0xFF264549),
+  500: Color(_darkPrimaryValue),
+  600: Color(0xFF002024),
+  700: Color(0xFF001B1F),
+  800: Color(0xFF001619),
+  900: Color(0xFF000D0F),
+});
+const int _darkPrimaryValue = 0xFF002429;
+
+const MaterialColor darkAccent = MaterialColor(_darkAccentValue, <int, Color>{
+  100: Color(0xFF52E2FF),
+  200: Color(_darkAccentValue),
+  400: Color(0xFF00C3EB),
+  700: Color(0xFF00AED1),
+});
+const int _darkAccentValue = 0xFF1FDAFF;
