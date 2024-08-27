@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SearchResult(
+                      builder: (context) => SearchResults(
                             searchTerm: searchTerm,
                           )),
                 );
@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SearchResult(
+                builder: (context) => SearchResults(
                       searchTerm: recentSearchTerms[recentSearchIndex],
                     )),
           );
