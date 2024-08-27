@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:corelab_app_challenge/colors.dart';
+import 'package:corelab_app_challenge/styles/colors.dart';
 import 'package:intl/intl.dart';
 
-class ProductAnnouncement extends StatelessWidget {
+class Product extends StatelessWidget {
   final int discount;
   final String name;
   final String brand;
@@ -12,8 +12,9 @@ class ProductAnnouncement extends StatelessWidget {
   final double installmentsPrice;
   final int installmentsQuantity;
   final bool isNew;
+  final String date;
 
-  const ProductAnnouncement({
+  const Product({
     super.key,
     this.discount = 0,
     required this.name,
@@ -24,45 +25,48 @@ class ProductAnnouncement extends StatelessWidget {
     required this.installmentsPrice,
     required this.installmentsQuantity,
     this.isNew = false,
+    required this.date,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: MediaQuery.sizeOf(context).width,
-        child: Center(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(photo, width: 100, height: 100),
-              const SizedBox(width: 16),
-              SizedBox(
-                width: 219,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    showDiscountSign(discount),
-                    Text("$name - $brand",
-                        style: const TextStyle(
-                            color: dark,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400)),
-                    showPrice(price, discount, priceWithDiscount),
-                    Text(
-                      "Em até $installmentsQuantity de ${NumberFormat.simpleCurrency(locale: 'pt-BR', decimalDigits: 2).format(installmentsPrice)}",
-                      style: const TextStyle(
-                        color: primary,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
-                    ),
-                    showNewSign(isNew)
-                  ],
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0XFFEBF1F4), width: 1)
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(photo, width: 100, height: 100),
+          const SizedBox(width: 16),
+          SizedBox(
+            width: 219,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                showDiscountSign(discount),
+                Text("$name - $brand",
+                    style: const TextStyle(
+                        color: dark,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400)),
+                showPrice(price, discount, priceWithDiscount),
+                Text(
+                  "Em até $installmentsQuantity de ${NumberFormat.simpleCurrency(locale: 'pt-BR', decimalDigits: 2).format(installmentsPrice)}",
+                  style: const TextStyle(
+                    color: primary,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
                 ),
-              )
-            ],
-          ),
-        ));
+                showNewSign(isNew)
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -87,7 +91,7 @@ showDiscountSign(discount) {
           borderRadius: BorderRadius.all(Radius.circular(4))),
     );
   } else {
-    return const Text("");
+    return const Text("", style: TextStyle(height: 0),);
   }
 }
 
