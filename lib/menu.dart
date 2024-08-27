@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import 'styles/colors.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:corelab_app_challenge/home.dart';
+import 'package:corelab_app_challenge/screens/home.dart';
 import 'package:corelab_app_challenge/categories.dart';
 
 class Menu extends StatefulWidget {

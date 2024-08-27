@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:corelab_app_challenge/colors.dart';
+import 'package:corelab_app_challenge/styles/colors.dart';
 import 'menu.dart';
 
 void main() {
