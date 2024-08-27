@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import '../styles/colors.dart';
 import '../utils/product_methods.dart';
+import 'search_result.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool showRecentSearches = false;
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +22,39 @@ class Home extends StatelessWidget {
           titleSpacing: 10,
           toolbarHeight: 60,
           centerTitle: true,
-          title: const SizedBox(
+          title: SizedBox(
             height: 44,
             child: TextField(
+              controller: searchController,
+              onTap: () {
+                setState(() {
+                  showRecentSearches = true;
+                });
+              },
+              onTapOutside: (event) {
+                setState(() {
+                  showRecentSearches = false;
+                  searchController.clear();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                });
+              },
+              onSubmitted: (searchTerm) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SearchResult(
+                            searchTerm: searchTerm,
+                          )),
+                );
+              },
               cursorColor: dark,
-              style: TextStyle(color: dark),
-              decoration: InputDecoration(
+              style: const TextStyle(color: dark),
+              decoration: const InputDecoration(
                 labelText: "Buscar",
-                labelStyle: TextStyle(color: Color(0xFF94A6A9)),
+                labelStyle: TextStyle(
+                    color: Color(0xFF94A6A9),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 suffixIcon: Icon(Icons.search, size: 24),
                 suffixIconColor: primary,
@@ -33,18 +68,41 @@ class Home extends StatelessWidget {
             ),
           ),
         ),
-        body: ListView(shrinkWrap: true, children: getHomePageList()));
+        body: ListView(
+            shrinkWrap: true, children: getHomePageList(showRecentSearches)));
   }
 }
 
-List<Widget> getHomePageList() {
-  List<Widget> homeList = [
+List<Widget> getHomePageList(showRecentSearches) {
+  return showRecentSearches
+      ? getRecentSearchesList()
+      : getLastAnnouncementsList();
+}
+
+List<Widget> getRecentSearchesList() {
+  List<Widget> recentSearches = [
+    const Padding(
+      padding: EdgeInsets.all(20),
+      child: Text(
+        "Pesquisas recentes",
+        style: TextStyle(
+            fontSize: 16, fontWeight: FontWeight.w500, color: dark, height: 0),
+      ),
+    ),
+    ...getRecentSearchesWidgets()
+  ];
+
+  return recentSearches;
+}
+
+List<Widget> getLastAnnouncementsList() {
+  List<Widget> lastAnnouncementsList = [
     const Padding(
       padding: EdgeInsets.all(20),
       child: Text(
         "Últimos anúncios",
         style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w400, color: dark, height: 0),
+            fontSize: 20, fontWeight: FontWeight.w500, color: dark, height: 0),
       ),
     ),
     const Padding(
@@ -53,7 +111,7 @@ List<Widget> getHomePageList() {
         "Hoje",
         style: TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
             color: secondary,
             height: 0),
       ),
@@ -65,7 +123,7 @@ List<Widget> getHomePageList() {
         "Ontem",
         style: TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
             color: secondary,
             height: 0),
       ),
@@ -73,5 +131,5 @@ List<Widget> getHomePageList() {
     ...getProductsWidgets(getYesterdaysProducts()),
   ];
 
-  return homeList;
+  return lastAnnouncementsList;
 }

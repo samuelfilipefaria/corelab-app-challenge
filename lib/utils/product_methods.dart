@@ -1,4 +1,8 @@
+import 'package:corelab_app_challenge/styles/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import '../services/mocked_product_data.dart';
+import '../services/mocked_search_data.dart';
 import '../widgets/product.dart';
 
 getTodaysProducts() {
@@ -32,4 +36,25 @@ List<Product> getProductsWidgets(productsData) {
   });
 
   return productWidgets;
+}
+
+List<Widget> getRecentSearchesWidgets() {
+  List<Widget> recentSearchWidgets = [];
+
+  recentSearchTerms.forEach((recentSearchTerm) {
+    recentSearchWidgets.add(Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(right: 14),
+            child: Icon(Symbols.history, color: secondary),
+          ),
+          Text(recentSearchTerm, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: secondary),)
+        ],
+      ),
+    ));
+  });
+
+  return recentSearchWidgets;
 }
