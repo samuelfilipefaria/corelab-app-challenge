@@ -17,6 +17,22 @@ List<Map> getPoductsByDate(date) {
   return products.where((product) => product["date"] == date).toList();
 }
 
+List<Map> getPoductsByTerm(term) {
+  String searchTerm = term.toLowerCase().trim();
+
+  if (searchTerm == "") {
+    return products;
+  } else {
+    return products.where((product) =>
+      (product["name"].toString().toLowerCase().contains(searchTerm)) ||
+      (product["brand"].toString().toLowerCase().contains(searchTerm)) ||
+      (product["price"].toString().toLowerCase().contains(searchTerm)) ||
+      (product["priceWithDiscount"].toString().toLowerCase().contains(searchTerm)) ||
+      (product["installmentsPrice"].toString().toLowerCase().contains(searchTerm))
+    ).toList();
+  }
+}
+
 List<Product> getProductsWidgets(productsData) {
   List<Product> productWidgets = [];
 
