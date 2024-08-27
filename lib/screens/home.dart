@@ -1,7 +1,8 @@
+import 'package:corelab_app_challenge/services/mocked_search_data.dart';
 import 'package:flutter/material.dart';
 import '../styles/colors.dart';
 import '../utils/product_methods.dart';
-import 'search_result.dart';
+import 'search_results.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class Home extends StatefulWidget {
@@ -31,14 +32,12 @@ class _HomeState extends State<Home> {
                   showRecentSearches = true;
                 });
               },
-              onTapOutside: (event) {
+              onSubmitted: (searchTerm) {
+                searchController.clear();
                 setState(() {
                   showRecentSearches = false;
-                  searchController.clear();
-                  FocusManager.instance.primaryFocus?.unfocus();
                 });
-              },
-              onSubmitted: (searchTerm) {
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -71,65 +70,102 @@ class _HomeState extends State<Home> {
         body: ListView(
             shrinkWrap: true, children: getHomePageList(showRecentSearches)));
   }
-}
 
-List<Widget> getHomePageList(showRecentSearches) {
-  return showRecentSearches
-      ? getRecentSearchesList()
-      : getLastAnnouncementsList();
-}
+  List<Widget> getRecentClickableSearchesWidgets() {
+    List<Widget> recentSearchesWidgets = getRecentSearchesWidgets();
+    List<Widget> recentClickableSearchesWidgets = [];
 
-List<Widget> getRecentSearchesList() {
-  List<Widget> recentSearches = [
-    const Padding(
-      padding: EdgeInsets.all(20),
-      child: Text(
-        "Pesquisas recentes",
-        style: TextStyle(
-            fontSize: 16, fontWeight: FontWeight.w500, color: dark, height: 0),
+    int recentSearchIndex = 0;
+
+    for (var recentSearchIndex = 0; recentSearchIndex < recentSearchesWidgets.length; recentSearchIndex++) {
+      Widget recentSearchWidget = recentSearchesWidgets[recentSearchIndex];
+
+      recentClickableSearchesWidgets.add(InkWell(
+        onTap: () {
+          searchController.clear();
+          setState(() {
+            showRecentSearches = false;
+          });
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SearchResult(
+                      searchTerm: recentSearchTerms[recentSearchIndex],
+                    )),
+          );
+        },
+        child: recentSearchWidget,
+      ));
+    }
+
+    return recentClickableSearchesWidgets;
+  }
+
+  List<Widget> getHomePageList(showRecentSearches) {
+    return showRecentSearches
+        ? getRecentSearchesList()
+        : getLastAnnouncementsList();
+  }
+
+  List<Widget> getRecentSearchesList() {
+    List<Widget> recentSearches = [
+      const Padding(
+        padding: EdgeInsets.all(20),
+        child: Text(
+          "Pesquisas recentes",
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: dark,
+              height: 0),
+        ),
       ),
-    ),
-    ...getRecentSearchesWidgets()
-  ];
+      ...getRecentClickableSearchesWidgets()
+    ];
 
-  return recentSearches;
-}
+    return recentSearches;
+  }
 
-List<Widget> getLastAnnouncementsList() {
-  List<Widget> lastAnnouncementsList = [
-    const Padding(
-      padding: EdgeInsets.all(20),
-      child: Text(
-        "Últimos anúncios",
-        style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w500, color: dark, height: 0),
+  List<Widget> getLastAnnouncementsList() {
+    List<Widget> lastAnnouncementsList = [
+      const Padding(
+        padding: EdgeInsets.all(20),
+        child: Text(
+          "Últimos anúncios",
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: dark,
+              height: 0),
+        ),
       ),
-    ),
-    const Padding(
-      padding: EdgeInsets.only(left: 20, bottom: 10),
-      child: Text(
-        "Hoje",
-        style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: secondary,
-            height: 0),
+      const Padding(
+        padding: EdgeInsets.only(left: 20, bottom: 10),
+        child: Text(
+          "Hoje",
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: secondary,
+              height: 0),
+        ),
       ),
-    ),
-    ...getProductsWidgets(getTodaysProducts()),
-    const Padding(
-      padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-      child: Text(
-        "Ontem",
-        style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: secondary,
-            height: 0),
+      ...getProductsWidgets(getTodaysProducts()),
+      const Padding(
+        padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
+        child: Text(
+          "Ontem",
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: secondary,
+              height: 0),
+        ),
       ),
-    ),
-    ...getProductsWidgets(getYesterdaysProducts()),
-  ];
+      ...getProductsWidgets(getYesterdaysProducts()),
+    ];
 
-  return lastAnnouncementsList;
+    return lastAnnouncementsList;
+  }
 }
