@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         primarySwatch: primary,
-        appBarTheme: const AppBarTheme(backgroundColor: primary)
+        appBarTheme: const AppBarTheme(backgroundColor: primary),
+        fontFamily: "DM Sans",
       ),
       home: const Menu(),
     );
