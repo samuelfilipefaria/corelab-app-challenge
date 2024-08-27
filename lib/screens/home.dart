@@ -1,20 +1,11 @@
-import 'package:corelab_app_challenge/services/mocked_search_data.dart';
 import 'package:flutter/material.dart';
 import '../styles/colors.dart';
 import '../utils/product_methods.dart';
-import 'search_results.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'recent_searches.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  bool showRecentSearches = false;
-  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +17,12 @@ class _HomeState extends State<Home> {
           title: SizedBox(
             height: 44,
             child: TextField(
-              controller: searchController,
+              canRequestFocus: false,
               onTap: () {
-                setState(() {
-                  showRecentSearches = true;
-                });
-              },
-              onSubmitted: (searchTerm) {
-                searchController.clear();
-                setState(() {
-                  showRecentSearches = false;
-                });
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SearchResults(
-                            searchTerm: searchTerm,
-                          )),
+                      builder: (context) => const RecentSearches()),
                 );
               },
               cursorColor: dark,
@@ -55,7 +34,7 @@ class _HomeState extends State<Home> {
                     fontSize: 16,
                     fontWeight: FontWeight.w400),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                suffixIcon: Icon(Icons.search, size: 24),
+                suffixIcon: Icon(Symbols.search, size: 24),
                 suffixIconColor: primary,
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(
@@ -67,64 +46,7 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        body: ListView(
-            shrinkWrap: true, children: getHomePageList(showRecentSearches)));
-  }
-
-  List<Widget> getRecentClickableSearchesWidgets() {
-    List<Widget> recentSearchesWidgets = getRecentSearchesWidgets();
-    List<Widget> recentClickableSearchesWidgets = [];
-
-    int recentSearchIndex = 0;
-
-    for (var recentSearchIndex = 0; recentSearchIndex < recentSearchesWidgets.length; recentSearchIndex++) {
-      Widget recentSearchWidget = recentSearchesWidgets[recentSearchIndex];
-
-      recentClickableSearchesWidgets.add(InkWell(
-        onTap: () {
-          searchController.clear();
-          setState(() {
-            showRecentSearches = false;
-          });
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SearchResults(
-                      searchTerm: recentSearchTerms[recentSearchIndex],
-                    )),
-          );
-        },
-        child: recentSearchWidget,
-      ));
-    }
-
-    return recentClickableSearchesWidgets;
-  }
-
-  List<Widget> getHomePageList(showRecentSearches) {
-    return showRecentSearches
-        ? getRecentSearchesList()
-        : getLastAnnouncementsList();
-  }
-
-  List<Widget> getRecentSearchesList() {
-    List<Widget> recentSearches = [
-      const Padding(
-        padding: EdgeInsets.all(20),
-        child: Text(
-          "Pesquisas recentes",
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: dark,
-              height: 0),
-        ),
-      ),
-      ...getRecentClickableSearchesWidgets()
-    ];
-
-    return recentSearches;
+        body: ListView(shrinkWrap: true, children: getLastAnnouncementsList()));
   }
 
   List<Widget> getLastAnnouncementsList() {
