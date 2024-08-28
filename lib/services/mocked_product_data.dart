@@ -4,7 +4,7 @@ const products = [
     "name": "Condicionador Ácido Fosfórico 37%",
     "brand": "AllPrime",
     "photo":
-        "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg?wp=1&w=136&h=136",
+        "images/product_1.png",
     "price": 300.0,
     "priceWithDiscount": 290.90,
     "installmentsPrice": 249.90,
@@ -16,7 +16,7 @@ const products = [
     "name": "Condicionador Ácido Fosfórico 37%",
     "brand": "AllPrime",
     "photo":
-        "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg?wp=1&w=136&h=136",
+        "images/product_2.png",
     "price": 29.90,
     "installmentsPrice": 249.90,
     "installmentsQuantity": 12,
@@ -27,7 +27,7 @@ const products = [
     "name": "Condicionador Ácido Fosfórico 37%",
     "brand": "AllPrime",
     "photo":
-        "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg?wp=1&w=136&h=136",
+        "images/product_1.png",
     "price": 29.90,
     "installmentsPrice": 249.90,
     "installmentsQuantity": 12,

@@ -32,39 +32,46 @@ class Product extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: const Color(0XFFEBF1F4), width: 1)
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(photo, width: 100, height: 100),
-          const SizedBox(width: 16),
-          SizedBox(
-            width: 219,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                showDiscountSign(discount),
-                Text("$name - $brand",
-                    style: const TextStyle(
-                        color: dark,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400)),
-                showPrice(price, discount, priceWithDiscount),
-                Text(
-                  "Em até $installmentsQuantity de ${NumberFormat.simpleCurrency(locale: 'pt-BR', decimalDigits: 2).format(installmentsPrice)}",
-                  style: const TextStyle(
-                    color: primary,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                  ),
-                ),
-                showNewSign(isNew)
-              ],
+          color: Colors.white,
+          border: Border.all(color: const Color(0XFFEBF1F4), width: 1)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Image.asset(photo, width: 100, height: 100),
             ),
-          )
-        ],
+            Container(
+              width: MediaQuery.sizeOf(context).width * 0.52,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  showDiscountSign(discount),
+                  Text("$name - $brand",
+                      softWrap: true,
+                      style: const TextStyle(
+                        color: dark,
+                        fontFamily: "DM Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                      )),
+                  showPrice(price, discount, priceWithDiscount),
+                  Text(
+                    "Em até $installmentsQuantity de ${NumberFormat.simpleCurrency(locale: 'pt-BR', decimalDigits: 2).format(installmentsPrice)}",
+                    style: const TextStyle(
+                      color: primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  showNewSign(isNew)
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -91,7 +98,10 @@ showDiscountSign(discount) {
           borderRadius: BorderRadius.all(Radius.circular(4))),
     );
   } else {
-    return const Text("", style: TextStyle(height: 0),);
+    return const Text(
+      "",
+      style: TextStyle(height: 0),
+    );
   }
 }
 
@@ -105,8 +115,8 @@ showPrice(price, discount, priceWithDiscount) {
               .format(price),
           style: const TextStyle(
               color: secondary,
-              fontWeight: FontWeight.w400,
               fontSize: 14,
+              fontWeight: FontWeight.w400,
               decoration: TextDecoration.lineThrough),
         ),
         Text(
@@ -114,8 +124,8 @@ showPrice(price, discount, priceWithDiscount) {
               .format(priceWithDiscount),
           style: const TextStyle(
             color: dark,
-            fontWeight: FontWeight.w400,
             fontSize: 20,
+            fontWeight: FontWeight.w500,
           ),
         )
       ],
@@ -126,8 +136,8 @@ showPrice(price, discount, priceWithDiscount) {
           .format(price),
       style: const TextStyle(
         color: dark,
-        fontWeight: FontWeight.w400,
         fontSize: 20,
+        fontWeight: FontWeight.w500,
       ),
     );
   }
@@ -139,8 +149,8 @@ showNewSign(isNew) {
       "NOVO",
       style: TextStyle(
         color: secondary,
-        fontWeight: FontWeight.w400,
         fontSize: 12,
+        fontWeight: FontWeight.w500,
       ),
     );
   } else {
