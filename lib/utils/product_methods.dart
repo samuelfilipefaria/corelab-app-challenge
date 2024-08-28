@@ -23,13 +23,20 @@ List<Map> getPoductsByTerm(term) {
   if (searchTerm == "") {
     return products;
   } else {
-    return products.where((product) =>
-      (product["name"].toString().toLowerCase().contains(searchTerm)) ||
-      (product["brand"].toString().toLowerCase().contains(searchTerm)) ||
-      (product["price"].toString().toLowerCase().contains(searchTerm)) ||
-      (product["priceWithDiscount"].toString().toLowerCase().contains(searchTerm)) ||
-      (product["installmentsPrice"].toString().toLowerCase().contains(searchTerm))
-    ).toList();
+    return products
+        .where((product) =>
+            (product["name"].toString().toLowerCase().contains(searchTerm)) ||
+            (product["brand"].toString().toLowerCase().contains(searchTerm)) ||
+            (product["price"].toString().toLowerCase().contains(searchTerm)) ||
+            (product["priceWithDiscount"]
+                .toString()
+                .toLowerCase()
+                .contains(searchTerm)) ||
+            (product["installmentsPrice"]
+                .toString()
+                .toLowerCase()
+                .contains(searchTerm)))
+        .toList();
   }
 }
 
@@ -66,7 +73,11 @@ List<Widget> getRecentSearchesWidgets() {
             padding: EdgeInsets.only(right: 14),
             child: Icon(Symbols.history, color: secondary),
           ),
-          Text(recentSearchTerm, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: secondary),)
+          Text(
+            recentSearchTerm,
+            style: const TextStyle(
+                fontSize: 18, fontWeight: FontWeight.w400, color: secondary),
+          )
         ],
       ),
     ));

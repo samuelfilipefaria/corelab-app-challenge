@@ -15,6 +15,8 @@ class SearchResults extends StatefulWidget {
 }
 
 class _SearchResultsState extends State<SearchResults> {
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +37,7 @@ class _SearchResultsState extends State<SearchResults> {
           title: SizedBox(
             height: 44,
             child: TextField(
+              controller: searchController,
               onSubmitted: (newSearchTerm) {
                 setState(() {
                   widget.searchTerm = newSearchTerm;
@@ -43,13 +46,12 @@ class _SearchResultsState extends State<SearchResults> {
               cursorColor: dark,
               style: const TextStyle(color: dark),
               decoration: InputDecoration(
-                labelText: widget.searchTerm,
                 labelStyle: const TextStyle(
                     color: dark,
                     fontSize: 16,
                     fontWeight: FontWeight.w400),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                suffixIcon: Icon(Icons.close, size: 24),
+                suffixIcon: IconButton(icon: Icon(Icons.close, size: 24), onPressed: () { widget.searchTerm = ""; setState(() {}); },),
                 suffixIconColor: Color(0xFFADBBBF),
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(
@@ -66,32 +68,70 @@ class _SearchResultsState extends State<SearchResults> {
           children: getSearchResultsList(widget.searchTerm),
         ));
   }
-}
 
-List<Map> getSearchResults(searchTerm) {
-  return getPoductsByTerm(searchTerm);
-}
+  List<Map> getSearchResults(searchTerm) {
+    return getPoductsByTerm(searchTerm);
+  }
 
-List<Widget> getSearchResultsProducts(searchTerm) {
-  return getProductsWidgets(getSearchResults(searchTerm));
-}
+  List<Widget> getSearchResultsProducts(searchTerm) {
+    return getProductsWidgets(getSearchResults(searchTerm));
+  }
 
-int getSearchResultsQuantity(searchTerm) {
-  return getSearchResults(searchTerm).length;
-}
+  int getSearchResultsQuantity(searchTerm) {
+    return getSearchResults(searchTerm).length;
+  }
 
-List<Widget> getSearchResultsList(searchTerm) {
-  List<Widget> searchResults = [
-     Padding(
-      padding: const EdgeInsets.only(left: 20, bottom: 14, top: 24),
-      child: Text(
-        "${getSearchResultsQuantity(searchTerm)} resultados encontrados",
-        style: const TextStyle(
-            fontSize: 16, fontWeight: FontWeight.w500, color: dark, height: 0),
-      ),
-    ),
-    ...getSearchResultsProducts(searchTerm)
-  ];
+  List<Widget> getSearchResultsList(searchTerm) {
+    searchController.text = searchTerm;
 
-  return searchResults;
+    if (getSearchResultsQuantity(searchTerm) == 0) {
+      return [
+        Padding(
+          padding:
+              const EdgeInsets.only(top: 79, left: 69, right: 69, bottom: 20),
+          child: Image.asset("images/not_found.png", width: 236, height: 180),
+        ),
+        const Center(
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+            child: Text(
+              "Resultado não encontrado",
+              style: TextStyle(
+                  fontSize: 20, fontWeight: FontWeight.w500, color: dark),
+            ),
+          ),
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+          child: Center(
+            child: Text(
+              'Não encontramos nenhum resultado parecido com "$searchTerm".',
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0XFF4a6569)),
+            ),
+          ),
+        ),
+      ];
+    } else {
+      List<Widget> searchResults = [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, bottom: 14, top: 24),
+          child: Text(
+            "${getSearchResultsQuantity(searchTerm)} resultados encontrados",
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: dark,
+                height: 0),
+          ),
+        ),
+        ...getSearchResultsProducts(searchTerm)
+      ];
+
+      return searchResults;
+    }
+  }
 }

@@ -46,8 +46,7 @@ class _RecentSearchesState extends State<RecentSearches> {
         body: ListView(shrinkWrap: true, children: getRecentSearchesList()));
   }
 
-  void searchProduct(term) {
-    String searchTerm = term;
+  void searchProduct(searchTerm) {
     searchController.clear();
 
     Navigator.push(
