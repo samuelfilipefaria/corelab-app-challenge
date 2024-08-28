@@ -1,7 +1,9 @@
 const products = [
   {
     "discount": 10,
-    "name": "Condicionador Ácido Fosfórico 37%",
+    "title": "Condicionador Ácido Fosfórico 37%",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum orci et ex accumsan aliquet.",
+    "category": "Descartáveis",
     "brand": "AllPrime",
     "photo":
         "images/product_1.png",
@@ -10,10 +12,12 @@ const products = [
     "installmentsPrice": 249.90,
     "installmentsQuantity": 12,
     "isNew": true,
-    "date": "2024-08-27",
+    "announcement_date": "2024-08-27",
   },
   {
-    "name": "Condicionador Ácido Fosfórico 37%",
+    "title": "Condicionador Ácido Fosfórico 37%",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum orci et ex accumsan aliquet.",
+    "category": "Descartáveis",
     "brand": "AllPrime",
     "photo":
         "images/product_2.png",
@@ -21,16 +25,18 @@ const products = [
     "installmentsPrice": 249.90,
     "installmentsQuantity": 12,
     "isNew": true,
-    "date": "2024-08-27",
+    "announcement_date": "2024-08-27",
   },
   {
-    "name": "Condicionador Ácido Fosfórico 37%",
+    "title": "Condicionador Ácido Fosfórico 37%",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum orci et ex accumsan aliquet.",
+    "category": "Descartáveis",
     "brand": "AllPrime",
     "photo":
         "images/product_1.png",
     "price": 29.90,
     "installmentsPrice": 249.90,
     "installmentsQuantity": 12,
-    "date": "2024-08-26",
+    "announcement_date": "2024-08-26",
   },
 ];

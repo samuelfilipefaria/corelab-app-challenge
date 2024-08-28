@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:corelab_app_challenge/styles/colors.dart';
 import 'package:intl/intl.dart';
+import '../screens/product_details.dart';
 
 class Product extends StatelessWidget {
   final int discount;
-  final String name;
+  final String title;
+  final String description;
   final String brand;
   final String photo;
   final double price;
@@ -17,7 +19,8 @@ class Product extends StatelessWidget {
   const Product({
     super.key,
     this.discount = 0,
-    required this.name,
+    required this.title,
+    required this.description,
     required this.brand,
     required this.photo,
     required this.price,
@@ -30,47 +33,67 @@ class Product extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: const Color(0XFFEBF1F4), width: 1)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: Image.asset(photo, width: 100, height: 100),
-            ),
-            Container(
-              width: MediaQuery.sizeOf(context).width * 0.52,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  showDiscountSign(discount),
-                  Text("$name - $brand",
-                      softWrap: true,
-                      style: const TextStyle(
-                        color: dark,
-                        fontFamily: "DM Sans",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                      )),
-                  showPrice(price, discount, priceWithDiscount),
-                  Text(
-                    "Em até $installmentsQuantity de ${NumberFormat.simpleCurrency(locale: 'pt-BR', decimalDigits: 2).format(installmentsPrice)}",
-                    style: const TextStyle(
-                      color: primary,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  showNewSign(isNew)
-                ],
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProductDetails(productData: {
+            "discount": discount,
+            "title": title,
+            "description": description,
+            "brand": brand,
+            "photo": photo,
+            "price": price,
+            "priceWithDiscount": priceWithDiscount,
+            "installmentsPrice": installmentsPrice,
+            "installmentsQuantity": installmentsQuantity,
+            "isNew": isNew,
+            "date": date
+          })),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: const Color(0XFFEBF1F4), width: 1)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Image.asset(photo, width: 100, height: 100),
               ),
-            )
-          ],
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.52,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    showDiscountSign(discount),
+                    Text("$title - $brand",
+                        softWrap: true,
+                        style: const TextStyle(
+                          color: dark,
+                          fontFamily: "DM Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                        )),
+                    showPrice(price, discount, priceWithDiscount),
+                    Text(
+                      "Em até $installmentsQuantity de ${NumberFormat.simpleCurrency(locale: 'pt-BR', decimalDigits: 2).format(installmentsPrice)}",
+                      style: const TextStyle(
+                        color: primary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    showNewSign(isNew)
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

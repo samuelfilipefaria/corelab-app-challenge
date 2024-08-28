@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../styles/colors.dart';
-import '../utils/categories_methods.dart';
+import '../utils/widget_creators.dart';
+import '../services/mocked_categories_data.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
@@ -21,7 +22,7 @@ class Categories extends StatelessWidget {
       ),
       body: ListView(
         shrinkWrap: true,
-        children: getCategoriesWidgets(),
+        children: categoriesWidgetsFrom(categories),
       ),
     );
   }
