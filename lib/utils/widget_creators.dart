@@ -13,6 +13,7 @@ List<Product> productWidgetsFrom(productsData) {
         discount: productData["discount"] ?? 0,
         title: productData["title"],
         description: productData["description"],
+        category: productData["category"],
         brand: productData["brand"],
         photo: productData["photo"],
         price: productData["price"],

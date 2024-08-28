@@ -7,6 +7,7 @@ class Product extends StatelessWidget {
   final int discount;
   final String title;
   final String description;
+  final String category;
   final String brand;
   final String photo;
   final double price;
@@ -21,6 +22,7 @@ class Product extends StatelessWidget {
     this.discount = 0,
     required this.title,
     required this.description,
+    required this.category,
     required this.brand,
     required this.photo,
     required this.price,
@@ -41,6 +43,7 @@ class Product extends StatelessWidget {
             "discount": discount,
             "title": title,
             "description": description,
+            "category": category,
             "brand": brand,
             "photo": photo,
             "price": price,
@@ -75,7 +78,6 @@ class Product extends StatelessWidget {
                         softWrap: true,
                         style: const TextStyle(
                           color: dark,
-                          fontFamily: "DM Sans",
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
                         )),
