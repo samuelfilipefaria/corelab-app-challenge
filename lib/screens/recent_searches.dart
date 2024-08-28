@@ -1,8 +1,9 @@
-import 'package:corelab_app_challenge/services/mocked_search_data.dart';
 import 'package:flutter/material.dart';
 import '../styles/colors.dart';
-import '../utils/product_methods.dart';
+import 'package:corelab_app_challenge/services/mocked_search_data.dart';
+import '../utils/widget_creators.dart';
 import 'search_results.dart';
+import '../widgets/top_app_bar.dart';
 
 class RecentSearches extends StatefulWidget {
   const RecentSearches({super.key});
@@ -12,72 +13,36 @@ class RecentSearches extends StatefulWidget {
 }
 
 class _RecentSearchesState extends State<RecentSearches> {
-  TextEditingController searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
+  TextEditingController get searchController => _searchController;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          titleSpacing: 10,
-          toolbarHeight: 60,
-          centerTitle: true,
-          title: SizedBox(
-            height: 44,
-            child: TextField(
-              autofocus: true,
-              controller: searchController,
-              onSubmitted: (searchTerm) {
-                searchProduct(searchTerm);
-              },
-              cursorColor: dark,
-              style: const TextStyle(color: dark),
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(10),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                filled: true,
-                fillColor: Colors.white,
-              ),
+      appBar: TopAppBar(
+        showFilterButton: false,
+        child:
+
+        TextField(
+          autofocus: true,
+          controller: searchController,
+          onSubmitted: (searchTerm) { searchProduct(searchTerm); },
+          cursorColor: dark,
+          style: const TextStyle(color: dark),
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.all(10),
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.all(Radius.circular(8))
             ),
+            filled: true,
+            fillColor: Colors.white,
           ),
         ),
-        body: ListView(shrinkWrap: true, children: getRecentSearchesList()));
-  }
+      ),
 
-  void searchProduct(searchTerm) {
-    searchController.clear();
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => SearchResults(
-                searchTerm: searchTerm,
-              )),
+      body: ListView(shrinkWrap: true, children: getRecentSearchesList())
     );
-  }
-
-  List<Widget> getRecentClickableSearchesWidgets() {
-    List<Widget> recentSearchesWidgets = getRecentSearchesWidgets();
-    List<Widget> recentClickableSearchesWidgets = [];
-
-    int recentSearchIndex = 0;
-
-    for (var recentSearchIndex = 0;
-        recentSearchIndex < recentSearchesWidgets.length;
-        recentSearchIndex++) {
-      Widget recentSearchWidget = recentSearchesWidgets[recentSearchIndex];
-
-      recentClickableSearchesWidgets.add(InkWell(
-        onTap: () {
-          searchProduct(recentSearchTerms[recentSearchIndex]);
-        },
-        child: recentSearchWidget,
-      ));
-    }
-
-    return recentClickableSearchesWidgets;
   }
 
   List<Widget> getRecentSearchesList() {
@@ -87,15 +52,31 @@ class _RecentSearchesState extends State<RecentSearches> {
         child: Text(
           "Pesquisas recentes",
           style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: dark,
-              height: 0),
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: dark,
+            height: 0
+          ),
         ),
       ),
-      ...getRecentClickableSearchesWidgets()
+      ...recentClickableSearchesWidgetsFrom(recentSearchTerms, searchProduct)
     ];
 
     return recentSearches;
+  }
+
+  void searchProduct(searchTerm) {
+    setState(() {
+      searchController.clear();
+    });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchResults(
+          searchTerm: searchTerm,
+        )
+      ),
+    );
   }
 }

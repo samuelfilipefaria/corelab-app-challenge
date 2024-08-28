@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'styles/colors.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:corelab_app_challenge/screens/home.dart';
-import 'package:corelab_app_challenge/categories.dart';
+import 'package:corelab_app_challenge/screens/categories.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -13,6 +13,16 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   int _selectedIndex = 0;
+
+  Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+    0: GlobalKey<NavigatorState>(),
+    1: GlobalKey<NavigatorState>(),
+    2: GlobalKey<NavigatorState>(),
+    3: GlobalKey<NavigatorState>(),
+    4: GlobalKey<NavigatorState>(),
+    5: GlobalKey<NavigatorState>()
+  };
+
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     Categories(),
@@ -30,9 +40,7 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        body: buildNavigator(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           iconSize: 32,
@@ -65,5 +73,15 @@ class _MenuState extends State<Menu> {
           showUnselectedLabels: true,
           onTap: _onItemTapped,
         ));
+  }
+
+  buildNavigator() {
+    return Navigator(
+      key: navigatorKeys[_selectedIndex],
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+            builder: (_) => _widgetOptions.elementAt(_selectedIndex));
+      },
+    );
   }
 }
